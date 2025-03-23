@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>My Travel Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 40vh;  /* 지도 크기 줄이기 */
+            width: 100%;
+            margin-top: 20px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+        }
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        .country-list {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .country-item {
+            display: inline-block;
+            margin: 5px 10px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+<h2>🌎 내가 다녀온 나라들</h2>
+<div id="map"></div>
+
+<div class="country-list">
+    <h3>📍 여행 국가 목록</h3>
+    <div id="countries"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    const map = L.map('map').setView([30, 10], 2);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+    }).addTo(map);
+
+    const countries = [
+        { name: "🇰🇷 한국", lat: 37.5665, lng: 126.9780 },
+        { name: "🇪🇸 스페인", lat: 40.4168, lng: -3.7038 },
+        { name: "🇮🇹 이탈리아", lat: 41.9028, lng: 12.4964 },
+        { name: "🇫🇷 프랑스", lat: 48.8566, lng: 2.3522 },
+        { name: "🇲🇨 모나코", lat: 43.7384, lng: 7.4246 },
+        { name: "🇬🇧 영국", lat: 51.5074, lng: -0.1278 },
+        { name: "🇳🇱 네덜란드", lat: 52.3676, lng: 4.9041 },
+        { name: "🇩🇪 독일", lat: 52.5200, lng: 13.4050 },
+        { name: "🇸🇰 슬로바키아", lat: 48.1486, lng: 17.1077 },
+        { name: "🇨🇿 체코", lat: 50.0755, lng: 14.4378 },
+        { name: "🇭🇷 크로아티아", lat: 45.8150, lng: 15.9819 },
+        { name: "🇭🇺 헝가리", lat: 47.4979, lng: 19.0402 },
+        { name: "🇦🇹 오스트리아", lat: 48.2082, lng: 16.3738 },
+        { name: "🇸🇮 슬로베니아", lat: 46.0569, lng: 14.5058 },
+        { name: "🇵🇭 필리핀", lat: 14.5995, lng: 120.9842 },
+        { name: "🇻🇳 베트남", lat: 21.0285, lng: 105.8542 },
+        { name: "🇹🇭 태국", lat: 13.7563, lng: 100.5018 },
+        { name: "🇹🇼 대만", lat: 25.0330, lng: 121.5654 },
+        { name: "🇯🇵 일본", lat: 35.6895, lng: 139.6917 },
+        { name: "🇦🇺 호주", lat: -33.8688, lng: 151.2093 },
+        { name: "🇨🇦 캐나다", lat: 43.6532, lng: -79.3832 },
+    ];
+
+    const listContainer = document.getElementById("countries");
+
+    countries.forEach(({ name, lat, lng }) => {
+        L.marker([lat, lng])
+            .addTo(map)
+            .bindPopup(`<b>${name}</b>`);
+
+        const item = document.createElement("span");
+        item.className = "country-item";
+        item.textContent = name;
+        listContainer.appendChild(item);
+    });
+</script>
+</body>
+</html>
